@@ -14,6 +14,7 @@ class DocumentStorage : public enable_shared_from_this<DocumentStorage> {
   using StringPtr = shared_ptr<string>;
   using StringWeakPtr = weak_ptr<string>;
   map<string, StringWeakPtr> m_items;
+
 public:
   using DocumentContentProvider = function<string()>;
 
@@ -25,12 +26,9 @@ public:
     }
 
     if (!content) {
-      weak_ptr<DocumentStorage> weakSelf = shared_from_this();
-      auto deleter = [weakSelf, fileName](string *s) {
+      auto deleter = [self = shared_from_this(), fileName](string *s) {
         delete s;
-        if (auto strongSelf = weakSelf.lock()) {
-          strongSelf->m_items.erase(fileName);
-        }
+        self->m_items.erase(fileName);
       };
       content.reset(new string(GetFileContent(fileName.c_str())), deleter);
       m_items.insert_or_assign(fileName, content);
@@ -55,13 +53,13 @@ int main() {
 }
 
 string GetFileContent(const char *fileName) {
-	cout << "Loading file content " << fileName << "\n";
-	ifstream strm(fileName);
-	string text;
-	string line;
-	while (getline(strm, line)) {
-		text.append(line);
-		text.append("\n");
-	}
-	return text;
+  cout << "Loading file content " << fileName << "\n";
+  ifstream strm(fileName);
+  string text;
+  string line;
+  while (getline(strm, line)) {
+    text.append(line);
+    text.append("\n");
+  }
+  return text;
 }
