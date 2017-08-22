@@ -15,9 +15,9 @@ class DocumentStorage : public enable_shared_from_this<DocumentStorage> {
   using StringWeakPtr = weak_ptr<string>;
   map<string, StringWeakPtr> m_items;
 public:
-  using DocumentContent = function<string()>;
+  using DocumentContentProvider = function<string()>;
 
-  DocumentContent GetDocumentContent(const string &fileName) {
+  DocumentContentProvider GetDocumentContent(const string &fileName) {
     StringPtr content;
     auto it = m_items.find(fileName);
     if (it != m_items.end()) {
