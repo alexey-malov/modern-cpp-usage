@@ -1,80 +1,61 @@
 #pragma once
 #include "ICommand.h"
 #include "Robot.h"
+#include <memory>
+#include <vector>
 
-class CTurnOnCommand : public ICommand
-{
+class TurnOnCommand : public ICommand {
 public:
-	CTurnOnCommand(CRobot & robot)
-		: m_robot(robot)
-	{}
+  TurnOnCommand(Robot& robot)
+    : m_robot(robot) {}
 
-	void Execute() override
-	{
-		m_robot.TurnOn();
-	}
+  void Execute() override { m_robot.TurnOn(); }
+
 private:
-	CRobot & m_robot;
+  Robot& m_robot;
 };
 
-class CTurnOffCommand : public ICommand
-{
+class TurnOffCommand : public ICommand {
 public:
-	CTurnOffCommand(CRobot & robot)
-		:m_robot(robot)
-	{}
-	void Execute() override
-	{
-		m_robot.TurnOff();
-	}
+  TurnOffCommand(Robot& robot)
+    : m_robot(robot) {}
+  void Execute() override { m_robot.TurnOff(); }
+
 private:
-	CRobot & m_robot;
+  Robot& m_robot;
 };
 
-class CWalkCommand : public ICommand
-{
+class WalkCommand : public ICommand {
 public:
-	CWalkCommand(CRobot & robot, WalkDirection direction)
-		: m_robot(robot)
-		, m_direction(direction)
-	{}
-	void Execute() override
-	{
-		m_robot.Walk(m_direction);
-	}
+  WalkCommand(Robot& robot, WalkDirection direction)
+    : m_robot(robot)
+    , m_direction(direction) {}
+  void Execute() override { m_robot.Walk(m_direction); }
+
 private:
-	CRobot & m_robot;
-	WalkDirection m_direction;
+  Robot& m_robot;
+  WalkDirection m_direction;
 };
 
-class CStopCommand : public ICommand
-{
+class StopCommand : public ICommand {
 public:
-	CStopCommand(CRobot & robot)
-		: m_robot(robot)
-	{}
-	void Execute() override
-	{
-		m_robot.Stop();
-	}
+  StopCommand(Robot& robot)
+    : m_robot(robot) {}
+  void Execute() override { m_robot.Stop(); }
+
 private:
-	CRobot & m_robot;
+  Robot& m_robot;
 };
 
-class CMacroCommand : public ICommand
-{
+class MacroCommand : public ICommand {
 public:
-	void Execute() override
-	{
-		for (auto & cmd : m_commands)
-		{
-			cmd->Execute();
-		}
-	}
-	void AddCommand(std::unique_ptr<ICommand> && cmd)
-	{
-		m_commands.push_back(std::move(cmd));
-	}
+  void Execute() override {
+    for (auto& cmd : m_commands) {
+      cmd->Execute();
+    }
+  }
+  void AddCommand(std::unique_ptr<ICommand>&& cmd) { m_commands.push_back(std::move(cmd)); }
+
 private:
-	std::vector<std::unique_ptr<ICommand>> m_commands;
+  std::vector<std::unique_ptr<ICommand>> m_commands;
 };

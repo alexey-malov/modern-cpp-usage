@@ -8,7 +8,7 @@
 #include "ICommand.h"
 
 
-class CMenu
+class Menu
 {
 public:
 	void AddItem(

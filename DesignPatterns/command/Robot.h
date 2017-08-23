@@ -11,7 +11,7 @@ enum class WalkDirection
 	East,
 };
 
-class CRobot
+class Robot
 {
 public:
 	void TurnOn()
