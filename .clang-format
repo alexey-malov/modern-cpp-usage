@@ -1,0 +1,9 @@
+SpaceAfterTemplateKeyword: true
+AlwaysBreakTemplateDeclarations: true
+PointerAlignment: Left
+Standard: Cpp11
+AlignAfterOpenBracket: AlwaysBreak
+ContinuationIndentWidth: 2
+ColumnLimit: 100
+BreakConstructorInitializers: BeforeComma
+ConstructorInitializerIndentWidth: 2
