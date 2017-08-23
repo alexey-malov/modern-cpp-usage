@@ -26,10 +26,11 @@ public:
     }
 
     if (!content) {
-      auto deleter = [self = shared_from_this(), fileName](string *s) {
+      auto deleter = [ self = shared_from_this(), fileName ](string * s) {
         delete s;
         self->m_items.erase(fileName);
       };
+
       content.reset(new string(GetFileContent(fileName.c_str())), deleter);
       m_items.insert_or_assign(fileName, content);
     }
