@@ -1,1 +1,1 @@
-# CppMeeting-Kazan2017
+# Modern C++
